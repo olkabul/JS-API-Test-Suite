@@ -1,11 +1,16 @@
 import { test, expect } from "@playwright/test";
 import { baseURL, endpoints } from "../../config";
+import { postSchema } from "../schemas/post.schema";
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
 import { generatePostData, generateUserData } from "../../utils/generateData";
 import { getToken } from "../../auth";
 const headers = {
   Accept: "application/json",
   Authorization: `Bearer ${getToken()}`,
 };
+const ajv = new Ajv();
+addFormats(ajv);
 
 test.describe("posts operations", () => {
   let userId;
@@ -29,6 +34,10 @@ test.describe("posts operations", () => {
       headers,
     });
     const newPost = await response.json();
+    const validate = ajv.compile(postSchema);
+    const valid = validate(newPost);
+    expect(valid).toBe(true);
+    if (!valid) console.error(validate.errors);
     postId = newPost.id;
   });
 
@@ -58,7 +67,10 @@ test.describe("posts operations", () => {
     expect(response.ok()).toBe(true);
     const editedPost = await response.json();
     expect(editedPost.title.startsWith("edited"));
-    console.log("The post title after editing: ", editedPost.title);
+    const validate = ajv.compile(postSchema);
+    const valid = validate(editedPost);
+    expect(valid).toBe(true);
+    if (!valid) console.error(validate.errors);
   });
 
   test("delete the post", async ({ request }) => {

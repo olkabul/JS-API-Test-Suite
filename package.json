@@ -6,8 +6,17 @@
     "test": "npx playwright test",
     "report": "npx playwright show-report"
   },
-  "keywords": ["api", "playwright", "faker", "js"],
-  "author": "",
+  "keywords": [
+    "api",
+    "playwright",
+    "faker",
+    "automation",
+    "testing",
+    "rest api",
+    "e2e",
+    "js"
+  ],
+  "author": "Olga Bulgakova",
   "license": "ISC",
   "type": "module",
   "description": "End-to-end API test suite for GoRest public API using Playwright",
@@ -16,6 +25,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^9.8.0",
-    "ajv": "^8.17.1"
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
   }
 }

@@ -1,12 +1,17 @@
 import { test, expect } from "@playwright/test";
 import { getToken } from "../../auth";
 import { generateUserData } from "../../utils/generateData";
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
+import { userSchema } from "../schemas/user.schema";
 import { faker } from "@faker-js/faker";
 import { baseURL, endpoints } from "../../config";
 const headers = {
   Accept: "application/json",
   Authorization: `Bearer ${getToken()}`,
 };
+const ajv = new Ajv();
+addFormats(ajv);
 
 test.describe("CRUD user operations", () => {
   let userId;
@@ -20,6 +25,11 @@ test.describe("CRUD user operations", () => {
     });
     expect(response.status()).toBe(201);
     const newUser = await response.json();
+    const validate = ajv.compile(userSchema);
+    const valid = validate(newUser);
+    expect(valid).toBe(true);
+    if (!valid) console.error(validate.errors);
+
     userId = newUser.id;
   });
 
@@ -46,6 +56,10 @@ test.describe("CRUD user operations", () => {
     );
     const updatedUser = await response.json();
     expect(updatedUser.name).toBe(updatedName);
+    const validate = ajv.compile(userSchema);
+    const valid = validate(updatedUser);
+    expect(valid).toBe(true);
+    if (!valid) console.error(validate.errors);
   });
 
   test("delete user", async ({ request }) => {

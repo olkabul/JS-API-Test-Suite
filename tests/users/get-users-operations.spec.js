@@ -1,5 +1,11 @@
 import { test, expect } from "@playwright/test";
 import { baseURL, endpoints } from "../../config";
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
+import { userSchema } from "../schemas/user.schema";
+const ajv = new Ajv();
+addFormats(ajv);
+const validateUser = ajv.compile(userSchema);
 
 test.describe("API tests for users", async () => {
   let users;
@@ -11,10 +17,12 @@ test.describe("API tests for users", async () => {
     expect(Array.isArray(users)).toBe(true);
   });
 
-  test("get all users and verify the data type", async () => {
-    const user = users[0];
-    expect(typeof user.id).toBe("number");
-    expect(typeof user.name).toBe("string");
+  test("validate all users against user schema", async () => {
+    users.forEach((user) => {
+      const valid = validateUser(user);
+      expect(valid).toBe(true);
+      if (!valid) console.error(validateUser.errors);
+    });
   });
 
   test("the name of user has at least 2 letters", async () => {
