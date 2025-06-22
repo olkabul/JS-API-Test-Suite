@@ -1,4 +1,4 @@
 node_modules/
 .token
-.env
 test-results/
+playwright-report/	

@@ -1,12 +1,11 @@
 import { test, expect } from "@playwright/test";
-const baseUrl = "https://gorest.co.in/public/v2";
-const usersEp = "/users";
+import { baseURL, endpoints } from "../../config";
 
 test.describe("API tests for users", async () => {
   let users;
 
   test.beforeAll("cet users in array", async ({ request }) => {
-    const response = await request.get(`${baseUrl}${usersEp}`);
+    const response = await request.get(`${baseURL}${endpoints.users}`);
     expect(response.ok()).toBe(true);
     users = await response.json();
     expect(Array.isArray(users)).toBe(true);
@@ -43,13 +42,7 @@ test.describe("API tests for users", async () => {
     users.forEach((user) => {
       emails.push(user.email);
     });
-    console.log(emails);
     const uniqueEmails = new Set(emails);
-    console.log(uniqueEmails);
     expect(uniqueEmails.size === emails.length).toBe(true);
   });
-
-  // test("", async () => {});
-
-  // test("", async () => {});
 });

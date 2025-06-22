@@ -1,19 +1,21 @@
 {
-  "name": "playplaywright-js-demo",
+  "name": "gorest-api-suite",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx playwright test",
+    "report": "npx playwright show-report"
   },
-  "keywords": [],
+  "keywords": ["api", "playwright", "faker", "js"],
   "author": "",
   "license": "ISC",
   "type": "module",
-  "description": "",
+  "description": "End-to-end API test suite for GoRest public API using Playwright",
   "devDependencies": {
-    "@playwright/test": "^1.52.0"
+    "@playwright/test": "^1.53.1"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.8.0",
     "ajv": "^8.17.1"
   }
 }
