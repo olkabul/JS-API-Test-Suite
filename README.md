@@ -1,5 +1,13 @@
 # GoRest API Test Suite
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Framework-Playwright-red?style=flat-square" />
+  <img src="https://img.shields.io/badge/Language-JavaScript-yellow?style=flat-square" />
+  <img src="https://img.shields.io/badge/Type-API%20Tests-blue?style=flat-square" />
+  <img src="https://img.shields.io/badge/Data-Faker.js-green?style=flat-square" />
+  <img src="https://img.shields.io/badge/CI-GitHub%20Actions-purple?style=flat-square" />
+</p>
+
 This project contains a suite of automated API tests for the public [GoRest API](https://gorest.co.in/), written in JavaScript using [Playwright](https://playwright.dev/) and [Faker](https://fakerjs.dev/).  
 It covers full CRUD scenarios for users and posts, including negative cases and validation of response structure.
 
